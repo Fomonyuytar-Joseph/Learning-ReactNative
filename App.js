@@ -1,36 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View ,Button ,TextInput} from 'react-native';
+import { StyleSheet, Text, View ,Button ,TextInput,ScrollView } from 'react-native';
 
 export default function App() {
-  const [name , setName]=useState('Joseph');
-  const [age , setAge]=useState(20);
-  const ClickHandler=()=>{
-    setPerson({name:'Joe',age:'12'});
-  }
+  const [people , setPeople]=useState([
+    {name:'Joseph' , key:'1'},
+    {name:'Joe' , key:'2'},
+    {name:'Max' , key:'3'},
+    {name:'christy' , key:'4'},
+    {name:'marion' , key:'5'},
+    {name:'jame' , key:'6'},
+    {name:'sole' , key:'7'},
+    {name:'akrt' , key:'8'},
+  ]);
+  
   return (
     <View style={styles.container}>
-      <Text> Enter Name:</Text>
-      <TextInput 
-      style={styles.input}
-      placeholder='e.g Joe Josep werwe' 
-      onChangeText={(val)=>setName(val)}
-      />
+      <ScrollView>
+     {people.map((item)=>{
+       return(
+         <View key={item.key}>
+           <Text style={styles.item}> {item.name}</Text>
+         </View>
 
-<Text> Enter Age:</Text>
-      <TextInput 
-      keyboardType='numeric'
-      style={styles.input}
-      placeholder='e.g 19' 
-      onChangeText={(val)=>setAge(val)}
-      />
+       )
+      
+     })}
 
-      <Text>My name is {name} and I am {age} old</Text>
-      <View style={styles.buttonContainer}>
-        <Button title='Change Name' onPress={ClickHandler}/>
-
-      </View>
+      
       <StatusBar style="auto" />
+      </ScrollView>
     </View>
   );
 }
@@ -39,19 +38,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop:40,
+    paddingHorizontal:20
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
-  buttonContainer:{
-    marginTop:20
-  },
-  input:{
-    borderWidth:1,
-    borderColor:'#777',
-    padding:8,
-    margin:10,
-    width:250,
-    borderRadius:5
-
+  item:{
+    marginTop:24,
+    padding:30,
+    backgroundColor:'pink',
+    fontSize:24
   }
+  
 });
