@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View ,Button ,TextInput,ScrollView , FlatList ,TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View ,Button ,TextInput,ScrollView , FlatList ,TouchableOpacity ,Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Header from './Components/Header';
 import TodoItem from './Components/TodoItem';
 import AddTodo from './Components/AddTodo';
+// import Sanbox from './Components/Sanbox';
 
 export default function App() {
   const [todos ,setTodos]=useState([
@@ -19,15 +20,30 @@ const pressHandler= (key)=>{
 }
 
 const submitHandler=(text)=>{
-  setTodos((prevTodos)=>{
-    return [{text:text , key:Math.random().toString()} , ...prevTodos]
-  })
-
+  if(text.length > 3){
+    setTodos((prevTodos)=>{
+      return [{text:text , key:Math.random().toString()} , ...prevTodos]
+    })
+  }
+  else{
+    Alert.alert('OOPS','Todo must be adbove 3 characters long',[
+      {text:'Understood',onPress:()=> console.log('alert closed')}
+    ])
+  }
+ 
 }
     
 
   
   return (
+    //Sandox
+    // <Sanbox/>
+     <TouchableWithoutFeedback //onPress={()=>{
+    //   Keyboard.dismiss()
+    //   console.log('dismisses keyboard'
+    //   )
+    // }}
+      >
     <View style={styles.container}>
       {/*header*/}
       <Header/>
@@ -48,6 +64,7 @@ const submitHandler=(text)=>{
       </View>
       
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -59,9 +76,12 @@ const styles = StyleSheet.create({
     
   },
   content:{
+    flex: 1,
     padding: 40,
+    backgroundColor:'blue'
   },
   list:{
+    flex: 1,
     marginTop: 20,
   }
   
